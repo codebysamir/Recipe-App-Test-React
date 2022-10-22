@@ -1,12 +1,13 @@
 import React, {useContext} from 'react'
 import RecipeIngredientsEdit from './RecipeIngredientsEdit'
+import RecipeCreaterEdit from './RecipeCreaterEdit';
 import { RecipeContext } from './App'
 import { v4 as uuidv4 } from 'uuid';
 
 export default function RecipeEdit({recipe}) {
     const {handleRecipeChange, handleRecipeEditRemove} = useContext(RecipeContext)
 
-    function helpRecipeChange(changes) {
+    function handleChange(changes) {
        handleRecipeChange(recipe.id, {...recipe, ...changes})
     }
 
@@ -14,7 +15,7 @@ export default function RecipeEdit({recipe}) {
         const newIngredients = [...recipe.ingredients]
         const index = newIngredients.findIndex(i => i.id === id)
         newIngredients[index] = ingredient
-        helpRecipeChange({ingredients: newIngredients})
+        handleChange({ingredients: newIngredients})
     }
 
     function handleRecipeEditAddIngredient() {
@@ -23,12 +24,32 @@ export default function RecipeEdit({recipe}) {
             name: '',
             amount: ''
         }
-        helpRecipeChange({ingredients: [...recipe.ingredients, newIngredient]})
+        handleChange({ingredients: [...recipe.ingredients, newIngredient]})
     }
 
     function handleRecipeEditIngredientDelete(id) {
         const newIngredients = recipe.ingredients.filter(i => i.id !== id)
-        helpRecipeChange({ingredients: newIngredients})
+        handleChange({ingredients: newIngredients})
+    }
+
+    function handleCreaterChange(id, creater) {
+        const newCreaters = [...recipe.creaters]
+        const index = newCreaters.findIndex(c => c.id === id)
+        newCreaters[index] = creater
+        handleChange({creaters: newCreaters})
+    }
+
+    function handleRecipeEditCreaterAdd() {
+        const newCreater = {
+            id: uuidv4(),
+            name: ''
+        }
+        handleChange({creaters: [...recipe.creaters, newCreater]})
+    }
+
+    function handleRecipeEditCreaterDelete(id) {
+        const newCreater = recipe.creaters.filter(c => c.id !== id)
+        handleChange({creaters: newCreater})
     }
 
   return (
@@ -42,7 +63,7 @@ export default function RecipeEdit({recipe}) {
             className='recipe-edit__input' 
             type="text" name='name' id='name' 
             value={recipe.recipeName} 
-            onChange={e => helpRecipeChange(recipe.recipeName = e.target.value)}
+            onChange={e => handleChange(recipe.recipeName = e.target.value)}
             />
             <label className='recipe-edit__label' htmlFor="cookTime">Cooktime</label>
             <input 
@@ -51,7 +72,7 @@ export default function RecipeEdit({recipe}) {
             name='cookTime' 
             id='cookTime' 
             value={recipe.cookTime}
-            onChange={e => helpRecipeChange(recipe.cookTime = e.target.value)}
+            onChange={e => handleChange(recipe.cookTime = e.target.value)}
             />
             <label className='recipe-edit__label' htmlFor="servings">Servings</label>
             <input 
@@ -61,7 +82,7 @@ export default function RecipeEdit({recipe}) {
             name='servings' 
             id='servings' 
             value={recipe.servings}
-            onChange={e => helpRecipeChange(recipe.servings = parseInt(e.target.value) || 'Info not available')}
+            onChange={e => handleChange(recipe.servings = parseInt(e.target.value) || 'Info not available')}
             />
             <label className='recipe-edit__label' htmlFor="instruction">Instruction</label>
             <textarea 
@@ -69,7 +90,7 @@ export default function RecipeEdit({recipe}) {
             name="instruction" 
             id="instruction" 
             value={recipe.instruction}
-            onChange={e => helpRecipeChange(recipe.instruction = e.target.value)}
+            onChange={e => handleChange(recipe.instruction = e.target.value)}
             ></textarea>
         </div>
         <br />
@@ -87,8 +108,25 @@ export default function RecipeEdit({recipe}) {
                 />)
             }
         </div>
-        <div className='recipe-edit__add-ingredient-btn-container'>
+        <div className='recipe-edit__add-btn-container'>
             <button onClick={handleRecipeEditAddIngredient} className='btn btn--primary'>Add Ingredient</button>
+        </div>
+        <br />
+        <label className='recipe-edit__label'>Recipe made by:</label>
+        <div className='recipe-edit__recipe-creater-grid'>
+            <div>Name</div>
+            <div></div>
+            {recipe.creaters.map(creater => 
+                <RecipeCreaterEdit 
+                key={creater.id} 
+                creater={creater} 
+                handleCreaterChange={handleCreaterChange}
+                handleRecipeEditCreaterDelete={handleRecipeEditCreaterDelete}
+                />)
+            }
+        </div>
+        <div className='recipe-edit__add-btn-container'>
+            <button onClick={handleRecipeEditCreaterAdd} className='btn btn--primary'>Add Recipe Creater</button>
         </div>
     </div>
   )

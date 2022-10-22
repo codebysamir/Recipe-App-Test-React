@@ -52,6 +52,12 @@ function App() {
           name: '',
           amount: ''
         }
+      ],
+      creaters: [
+        {
+          id: uuidv4(),
+          name: ''
+        }
       ]
     }
 
@@ -113,6 +119,12 @@ export const recipeSample = [
         name: 'Salt',
         amount: '1 Tbs'
       }
+    ],
+    creaters: [
+      {
+        id: 1,
+        name: 'Bob'
+      }
     ]
   },
   {
@@ -131,6 +143,12 @@ export const recipeSample = [
         id: 2,
         name: 'Paprika',
         amount: '2 Tbs'
+      }
+    ],
+    creaters: [
+      {
+        id: 2,
+        name: 'David'
       }
     ]
   }

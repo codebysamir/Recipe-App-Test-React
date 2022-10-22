@@ -51,7 +51,15 @@ textarea.recipe-edit__input{
     margin-left: 40px;
 }
 
-.recipe-edit__add-ingredient-btn-container{
+.recipe-edit__add-btn-container{
     text-align: center;
     margin-top: 20px;
+}
+
+.recipe-edit__recipe-creater-grid{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+    margin-top: 20px;
+    margin-left: 40px;
 }
