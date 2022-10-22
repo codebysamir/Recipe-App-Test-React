@@ -5,6 +5,7 @@
 @import "./buttons.css";
 @import "./fonts.css";
 @import "./recipe-edit.css";
+@import "./search-bar.css";
 
 *,*::after,*::before{
     font-family: 'Poppins', 'sans serif';

@@ -1,0 +1,19 @@
+.search-bar{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+    justify-content: center;
+    text-align: right;
+    padding: 20px 0;
+    border-bottom: 1px solid black;
+}
+
+.search-bar__label{
+    font-weight: bold;
+}
+
+.search-bar__input{
+    font-size: inherit;
+    outline: none;
+    border: 1px solid black;
+}

@@ -3,6 +3,7 @@ import RecipeList from "./RecipeList";
 import "../css/app.css";
 import { v4 as uuidv4 } from 'uuid';
 import RecipeEdit from "./RecipeEdit";
+import SearchBar from "./SearchBar";
 
 export const RecipeContext = React.createContext()
 const LOCAL_STORAGE_KEY = 'cookingWithReact.recipe'
@@ -31,6 +32,8 @@ function App() {
 
   const [selectRecipeID, setSelectRecipeID] = useState()
   const selectedRecipe = recipes.find(recipe => recipe.id === selectRecipeID)
+  
+  const [searchedRecipes, setSearchedRecipes] = useState()
 
   function handleRecipeSelect(id){
     setSelectRecipeID(id)
@@ -74,9 +77,19 @@ function App() {
     setSelectRecipeID(undefined)
   }
 
+  function handleRecipeSearch(name) {
+    if (name !== '') {
+      const filteredRecipes = recipes.filter(recipe => recipe.recipeName.includes(name))
+      setSearchedRecipes(filteredRecipes)
+    } else {
+      setSearchedRecipes(undefined)
+    }
+  }
+
   return (
     <RecipeContext.Provider value={handleRecipeContext}>
-      <RecipeList recipeSample={recipes}/>
+      {!selectedRecipe && <SearchBar handleRecipeSearch={handleRecipeSearch} />}
+      {searchedRecipes !== undefined ? <RecipeList recipeSample={searchedRecipes}/> : <RecipeList recipeSample={recipes}/>}
       {selectedRecipe && <RecipeEdit recipe={selectedRecipe}/>}
     </RecipeContext.Provider>
   )
