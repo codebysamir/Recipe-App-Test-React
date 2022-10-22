@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function RecipeIngredientsEdit({ingredient, handleIngredientChange, handleRecipeEditIngredientDelete}) {
-    function helpIngredientChange(changes) {
+    function handleChange(changes) {
         handleIngredientChange(ingredient.id, {...ingredient, ...changes})
     }
 
@@ -11,13 +11,13 @@ export default function RecipeIngredientsEdit({ingredient, handleIngredientChang
         className='recipe-edit__input' 
         type="text" 
         value={ingredient.name} 
-        onChange={e => helpIngredientChange(ingredient.name = e.target.value)}
+        onChange={e => handleChange(ingredient.name = e.target.value)}
         />
         <input 
         className='recipe-edit__input' 
         type="text" 
         value={ingredient.amount}
-        onChange={e => helpIngredientChange(ingredient.amount = e.target.value)}
+        onChange={e => handleChange(ingredient.amount = e.target.value)}
         />
         <button 
         onClick={() => handleRecipeEditIngredientDelete(ingredient.id)} 
